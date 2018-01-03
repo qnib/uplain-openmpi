@@ -6,8 +6,6 @@ RUN apt-get install -y gcc wget make bzip2 g++ openmpi-bin openmpi-common libope
 ## Group stuff
 RUN groupadd -g 1002 cluser \
  && useradd -d /chome/cluser --uid 1002 --gid 1002 cluser
-COPY src/hello_mpi.c /usr/local/src/mpi/
-RUN mpicc -o /usr/local/bin/hello /usr/local/src/mpi/hello_mpi.c
 RUN echo "# go-wharfie: $(/usr/local/bin/go-github rLatestUrl --ghorg qnib --ghrepo go-wharfie --regex '.*_x86' --limit 1)" \
  && wget -qO /usr/local/bin/go-wharfie "$(/usr/local/bin/go-github rLatestUrl --ghorg qnib --ghrepo go-wharfie --regex '.*_x86' --limit 1)" \
  && chmod +x /usr/local/bin/go-wharfie
@@ -25,3 +23,6 @@ RUN mkdir -p ~cluser/ \
   && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
   && apt-get update \
   && apt-get install -y docker-ce
+COPY src/hello_mpi.c src/ring.c /usr/local/src/mpi/
+RUN mpicc -o /usr/local/bin/hello /usr/local/src/mpi/hello_mpi.c \
+  && mpicc -o /usr/local/bin/ring /usr/local/src/mpi/ring.c
