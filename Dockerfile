@@ -15,7 +15,8 @@ RUN mkdir -p /usr/local/src/openmpi \
  && rm -rf /usr/local/src/openmpi
 
 ## Group stuff
-RUN groupadd -g 1002 cluser \
+RUN mkdir -p /chome  \
+ && groupadd -g 1002 cluser \
  && useradd -d /chome/cluser -M --uid 1002 --gid 1002 cluser
 COPY src/hello_mpi.c src/ring.c /usr/local/src/mpi/
 RUN mpicc -o /usr/local/bin/hello /usr/local/src/mpi/hello_mpi.c
