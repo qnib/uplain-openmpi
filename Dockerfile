@@ -22,4 +22,3 @@ COPY src/hello_mpi.c src/ring.c /usr/local/src/mpi/
 RUN mpicc -o /usr/local/bin/hello /usr/local/src/mpi/hello_mpi.c
 RUN mpicc -o /usr/local/bin/ring /usr/local/src/mpi/ring.c
 COPY slurm/job-ring.sh slurm/job-hello.sh /opt/qnib/slurm/
-VOLUME ["/chome"]
