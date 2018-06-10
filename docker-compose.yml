@@ -18,12 +18,12 @@ services:
     healthcheck:
       disable: true
   controller:
-    image: qnib/uplain-slurm
+    image: qnib/uplain-slurm:2018-06-10_08-59
     hostname: "{{.Service.Name}}-{{.Task.Slot}}"
     environment:
       - SLURM_IS_CTLD=true
   worker:
-    image: qnib/uplain-openmpi
+    image: qnib/uplain-openmpi:2018-06-10_09-09
     hostname: "{{.Service.Name}}-{{.Task.Slot}}"
     deploy:
       replicas: 8
