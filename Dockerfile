@@ -1,4 +1,4 @@
-FROM qnib/uplain-slurm:2018-06-10_08-44
+FROM qnib/uplain-slurm:2018-06-10_08-59
 
 ARG OMPI_VER=3.1
 ARG OMPI_PATCH_VER=0
@@ -18,3 +18,4 @@ RUN groupadd -g 1002 cluser \
  && useradd -d /chome/cluser -M --uid 1002 --gid 1002 cluser
 COPY src/hello_mpi.c /usr/local/src/mpi/
 RUN mpicc -o /usr/local/bin/hello /usr/local/src/mpi/hello_mpi.c
+COPY slurm/job-ring.sh /opt/qnib/slurm/job-ring.sh
