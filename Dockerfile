@@ -16,6 +16,14 @@ RUN cd /usr/local/src/openmpi \
 ## Group stuff
 RUN groupadd -g 1002 cluser \
  && useradd -d /chome/cluser -M --uid 1002 --gid 1002 cluser
-COPY src/hello_mpi.c /usr/local/src/mpi/
+COPY src/hello_mpi.c src/ring.c /usr/local/src/mpi/
 RUN mpicc -o /usr/local/bin/hello /usr/local/src/mpi/hello_mpi.c
-COPY slurm/job-ring.sh /opt/qnib/slurm/job-ring.sh
+RUN mpicc -o /usr/local/bin/ring /usr/local/src/mpi/ring.c
+COPY slurm/job-ring.sh slurm/job-hello.sh /opt/qnib/slurm/
+VOLUME ["/chome"]
+RUN useradd --create-home -d /chome/cluser --password $(openssl passwd cluser) cluser \
+ && mkdir -p /chome/cluser/.ssh \
+ && chown -R cluser: /chome/cluser \
+ && chmod 700 /chome/cluser/.ssh \
+ &&  ssh-keygen -f /chome/cluser/.ssh/id_rsa -N '' \
+ && cp ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys

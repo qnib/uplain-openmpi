@@ -19,11 +19,11 @@ services:
       disable: true
   controller:
     image: qnib/uplain-slurm:2018-06-10_08-59
-    hostname: "{{.Service.Name}}-{{.Task.Slot}}"
+    hostname: "slurmd-{{.Task.Slot}}"
     environment:
       - SLURM_IS_CTLD=true
   worker:
     image: qnib/uplain-openmpi:2018-06-10_09-09
-    hostname: "{{.Service.Name}}-{{.Task.Slot}}"
+    hostname: "worker-{{.Task.Slot}}"
     deploy:
       replicas: 8
