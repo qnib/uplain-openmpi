@@ -1,4 +1,4 @@
-FROM qnib/uplain-slurm:2018-06-10_08-59
+FROM qnib/uplain-slurm
 
 ARG OMPI_VER=3.1
 ARG OMPI_PATCH_VER=0
